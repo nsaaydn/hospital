@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% if form.instance.pk %}
+            Edit Patient: {{ form.instance.first_name }} {{ form.instance.last_name }}
+        {% else %}
+            Add New Patient
+        {% endif %}
+    </title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #333; }
+        form div { margin-bottom: 15px; }
+        form label { display: block; margin-bottom: 5px; font-weight: bold; }
+        form input[type="text"],
+        form input[type="email"],
+        form input[type="date"],
+        form textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        form button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        form button:hover { background-color: #218838; }
+        .back-link { display: block; margin-top: 20px; color: #007bff; text-decoration: none; }
+        .errorlist { color: red; list-style-type: none; padding: 0; margin: 0; }
+        .errorlist li { margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+    <h1>
+        {% if form.instance.pk %}
+            Edit Patient
+        {% else %}
+            Add New Patient
+        {% endif %}
+    </h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {% if form.errors %}
+            <ul class="errorlist">
+                {% for field in form %}
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <li>{{ field.label }}: {{ error }}</li>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        {% endif %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+
+    <a href="{% url 'patient_list' %}" class="back-link">Back to List</a>
+</body>
+</html>

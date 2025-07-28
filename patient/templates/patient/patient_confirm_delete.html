@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Delete Patient</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #dc3545; }
+        p { margin-bottom: 20px; }
+        .actions button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .actions button.confirm { background-color: #dc3545; color: white; margin-right: 10px; }
+        .actions button.confirm:hover { background-color: #c82333; }
+        .actions a.cancel {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #6c757d;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .actions a.cancel:hover { background-color: #5a6268; }
+    </style>
+</head>
+<body>
+    <h1>Confirm Patient Deletion</h1>
+
+    <p>
+        Are you sure you want to delete patient <strong>"{{ patient.first_name }} {{ patient.last_name }}" (ID: {{ patient.patient_id }})</strong>? This action cannot be undone.
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="actions">
+            <button type="submit" class="confirm">Yes, Delete</button>
+            <a href="{% url 'patient_detail' patient.patient_id %}" class="cancel">Cancel</a>
+        </div>
+    </form>
+</body>
+</html>
