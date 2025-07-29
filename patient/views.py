@@ -17,14 +17,17 @@ class PatientDetailView(DetailView):
     pk_url_kwarg = 'patient_id'
 
 
-# 3. Yeni Hasta Ekleme Görünümü
 class PatientCreateView(CreateView):
     model = Patient
-    form_class = PatientForm 
-    template_name = 'patient/patient_form.html'
-    success_url = reverse_lazy('patient:patient_list')
+    form_class = PatientForm
+    template_name = 'patients/patient_form.html'
+    success_url = reverse_lazy('patient_list')
 
-# 4. Hasta Güncelleme Görünümü
+    def form_valid(self, form):
+        messages.success(self.request, 'Patient added successfully.')
+        return super().form_valid(form)
+
+
 class PatientUpdateView(UpdateView):
     model = Patient
     form_class = PatientForm
@@ -32,7 +35,7 @@ class PatientUpdateView(UpdateView):
     success_url = reverse_lazy('patient:patient_list') 
     pk_url_kwarg = 'patient_id' 
 
-# 5. Hasta Silme Görünümü
+
 class PatientDeleteView(DeleteView):
     model = Patient
     template_name = 'patient/patient_confirm_delete.html' 

@@ -40,8 +40,8 @@
     <div class="detail-item"><strong>Diagnosis:</strong> {{ patient.diagnosis|default:"N/A" }}</div>
 
     <div class="actions">
-        <a href="{% url 'patient_edit' patient.patient_id %}" class="edit">Edit</a>
-        <a href="{% url 'patient_delete' patient.patient_id %}" class="delete">Delete</a>
+        <a href="{% url 'patient_edit' patient.pk %}" class="edit">Edit</a>
+        <a href="{% url 'patient_delete' patient.pk %}" class="delete">Delete</a>
         <a href="{% url 'patient_list' %}" class="back">Back to List</a>
     </div>
 </body>
